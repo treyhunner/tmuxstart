@@ -9,6 +9,7 @@ sessions.  To use tmuxstart add a binding to your ``.tmux.conf`` file like::
 With the above binding, pressing ``<PREFIX> S`` will prompt you for a session
 name.  ``<PREFIX>`` is ``CTRL-b`` by default.
 
+
 Session Files
 -------------
 
@@ -19,6 +20,7 @@ have the shell variable ``$session`` available to them.
 Session files are just sourced shell scripts.  This makes them more flexible
 than tmuxinator sessions.  There are no dependencies for tmuxstart so it can
 easily be used on any machine with tmux installed.
+
 
 Helper functions
 ----------------
@@ -48,7 +50,7 @@ send_keys
 ``send_keys`` sends keys to a given window number in the new session.  This
 function accepts the same arguments as ``tmux send-keys``.  Examples::
 
-    send_keys 1 "Enter"  # Send Enter key to window 1
+    send_keys 1 "echo hello" "Enter"  # Run "echo hello" in window 1
     send_keys 2 C-c  # Send Ctrl-C key combination to window 2
 
 select_window
@@ -58,11 +60,27 @@ function accepts the same arguments as ``tmux select-window``.  Example::
 
     select_window 1  # Select window 1
 
+select_pane
+~~~~~~~~~~~
+``select_pane`` selects the given window and pane number in the new session.
+This function accepts the same arguments as ``tmux select-pane``.  Examples::
+
+    select_pane 2.1  # Select pane 1 in window 2
+    select_pane 1.2  # Select pane 2 in window 1
+
 set_env
 ~~~~~~~
 ``set_env`` sets an environment variable for the new session.  This function accepts the same arguments as ``tmux set-environment``.  Example::
 
     set_env EDITOR acme  # Set EDITOR environment variable to "acme"
+
+split
+~~~~~
+``split`` splits the given window or pane based on the arguments given.  This function accepts the same arguments as ``tmux split-window``.  Example::
+
+    split 2 -h  # Split window 2 horizontally
+    split 2.1 -l 2  # Split pane 1 in window 2 vertically using 2 text lines
+    split 1 -p -v "10%"  # Split window 1 vertically using 10% of given space
 
 
 Example session files
@@ -75,18 +93,29 @@ selected when the session starts::
     new_session -n htop htop
     new_window
 
-This session file will start a session with a Django server in the first pane
-(using `virtualenvwrapper`_ for virtualenv management), open a vim browser in
-the project directory in the second pane, and select the second pane::
+This session file will start a session with a Django server in the first
+window, open a vim browser and Django shell in the second window.
+`virtualenvwrapper`_ is used via the ``workon`` command for virtualenv
+management.
 
+    # Go to the Django repository directory and start the session
     cd "$HOME/repos/$session"
     new_session -n server
-    send_keys 1 "workon $session"
-    send_keys 1 "Enter"
-    send_keys 1 "python manage.py runserver"
-    send_keys 1 "Enter"
+
+    # Run the Django server in the first window
+    send_keys 1 "workon $session" "Enter"
+    send_keys 1 "python manage.py runserver" "Enter"
+
+    # Create a second window with a vim file browser open
     new_window -n edit "vim ."
-    select_window 2
+
+    # Create 20% split at bottom of window 2 and run Django shell in it
+    split 2 -v -p "20"
+    send_keys 2.2 "workon $session" "Enter"
+    send_keys 2.2 "python manage.py shell" "Enter"
+
+    # Select pane 1 in window 2
+    select_pane 2.1
 
 .. _virtualenvwrapper: http://www.doughellmann.com/projects/virtualenvwrapper/
 
