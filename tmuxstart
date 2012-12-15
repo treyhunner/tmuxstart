@@ -1,0 +1,25 @@
+#!/bin/sh
+
+usage() {
+    echo "Usage: $0 tmux-session"
+}
+
+# Print usage information if there's not exactly 1 argument
+[ $# -ne 1 ] && usage && exit 1
+
+session=$1
+TMUX_OLD=$TMUX
+TMUX=
+if ! tmux has-session -t $session ; then
+    if [ -f ~/.tmuxstart/$1 ] ; then
+        . ~/.tmuxstart/$1
+    else
+        tmux new-session -d -s $session
+    fi
+fi
+if [ "$TMUX_OLD" = "" ]; then
+    tmux attach-session -t $session
+else
+    tmux switch-client -t $session
+fi
+TMUX=$TMUX_OLD
