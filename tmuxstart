@@ -5,7 +5,9 @@ new_session() { tmux new-session -d -s $session "$@"; }
 new_window() { tmux new-window -d -t $session "$@"; }
 send_keys() { tmux send-keys -t $session:"$@"; }
 select_window() { tmux select-window -t $session:"$@"; }
+select_pane() { tmux select-pane -t $session:"$@"; }
 set_env() { tmux set-environment -t $session "$@"; }
+split() { tmux split-window -t $session:"$@"; }
 
 
 usage() {
