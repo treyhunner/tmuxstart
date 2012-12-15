@@ -9,22 +9,64 @@ sessions.  To use tmuxstart add a binding to your ``.tmux.conf`` file like::
 With the above binding, pressing ``<PREFIX> S`` will prompt you for a session
 name.  ``<PREFIX>`` is ``CTRL-b`` by default.
 
-Default session configurations
-------------------------------
+Session Files
+-------------
 
 To create a default configuration for a named session create a file named after
 the session under the directory ``~/.tmuxstart``.  These *session files* will
-have the shell variable $session available to them.
-
-Session files are simple
-~~~~~~~~~~~~~~~~~~~~~~~~
+have the shell variable ``$session`` available to them.
 
 Session files are just sourced shell scripts.  This makes them more flexible
 than tmuxinator sessions.  There are no dependencies for tmuxstart so it can
 easily be used on any machine with tmux installed.
 
+Helper functions
+----------------
+
+To make the process of writing session files easier some helper functions are
+included in the tmuxstart script.  The available helper functions are::
+
+new_session
+~~~~~~~~~~~
+``new_session`` creates a new auto-named session.  This should usually be the
+first command called in a session file.  This function accepts the same
+arguments as ``tmux new-session``.  Examples::
+
+    new_session  # Just create the session
+    new_session -n top htop  # Initial window named "top" running htop
+
+new_window
+~~~~~~~~~~~
+``new_window`` creates a new window in the new session.  This function accepts
+the same arguments as ``tmux new-window``.  Examples::
+
+    new_window  # Just create a new window
+    new_window -n edit emacs  # Create a new window named "edit" running emacs
+
+send_keys
+~~~~~~~~~
+``send_keys`` sends keys to a given window number in the new session.  This
+function accepts the same arguments as ``tmux send-keys``.  Examples::
+
+    send_keys 1 "Enter"  # Send Enter key to window 1
+    send_keys 2 C-c  # Send Ctrl-C key combination to window 2
+
+select_window
+~~~~~~~~~~~~~
+``select_window`` selects the given window number in the new session.  This
+function accepts the same arguments as ``tmux select-window``.  Example::
+
+    select_window 1  # Select window 1
+
+set_env
+~~~~~~~
+``set_env`` sets an environment variable for the new session.  This function accepts the same arguments as ``tmux set-environment``.  Example::
+
+    set_env EDITOR acme  # Set EDITOR environment variable to "acme"
+
+
 Example session files
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
 The following session file will create a window called "htop" which will run
 the ``htop`` command and then create a window containing a shell which will be
