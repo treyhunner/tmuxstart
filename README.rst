@@ -4,7 +4,7 @@ tmuxstart
 Tmuxstart can be used to create reusable configurations for named tmux
 sessions.  To use tmuxstart add a binding to your ``.tmux.conf`` file like::
 
-    bind S command-prompt -p "Make/attach session" "new-window 'tmuxstart \'%%\''"
+    bind S command-prompt -p "Make/attach session:" "new-window 'tmuxstart \'%%\''"
 
 With the above binding, pressing ``<PREFIX> S`` will prompt you for a session
 name.  ``<PREFIX>`` is ``CTRL-b`` by default.
