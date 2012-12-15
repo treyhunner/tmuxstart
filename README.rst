@@ -96,7 +96,7 @@ selected when the session starts::
 This session file will start a session with a Django server in the first
 window, open a vim browser and Django shell in the second window.
 `virtualenvwrapper`_ is used via the ``workon`` command for virtualenv
-management.
+management::
 
     # Go to the Django repository directory and start the session
     cd "$HOME/repos/$session"
