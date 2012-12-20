@@ -83,6 +83,15 @@ split
     split 1 -p -v "10%"  # Split window 1 vertically using 10% of given space
 
 
+swap
+~~~~
+``swap`` swaps the given pane with another pane.  This function accepts the same arguments as ``tmux swap-pane``.  Example:
+
+    swap 2.1 -D  # Swap pane 1 in window 2 with the next pane
+    swap 3.2 -U  # Swap pane 2 in window 3 with the previous pane
+    swap 4.3 -s 2.1  # Swap pane 3 in window 4 with pane 1 in window 2
+
+
 Example session files
 ---------------------
 
