@@ -94,8 +94,8 @@ selected when the session starts::
     new_window
 
 This session file will start a session with a Django server in the first
-window, open a vim browser and Django shell in the second window.
-`virtualenvwrapper`_ is used via the ``workon`` command for virtualenv
+window and open a vim browser and Django shell in the second window.
+`Virtualenvwrapper`_ is used via the ``workon`` command for virtualenv
 management::
 
     # Go to the Django repository directory and start the session
@@ -117,10 +117,29 @@ management::
     # Select pane 1 in window 2
     select_pane 2.1
 
-.. _virtualenvwrapper: http://www.doughellmann.com/projects/virtualenvwrapper/
+
+Installation
+------------
+
+Just copy the ``tmuxstart`` file to one of the directories in your ``$PATH``.
+I suggest either ``/usr/bin``, ``/usr/local/bin``, or ``~/bin``.
+
+
+Contributing & Help
+-------------------
+
+Feel free to contribute new helper functions, features/bug fixes,
+documentation, or usage examples.  Pull requests are welcome.
+
+If you need help please open an issue, or comment on my
+`tmuxstart announcement`_ if you find a bug or you need help with tmuxstart.
 
 
 License
 -------
 
 Tmuxstart is provided under an MIT license: http://th.mit-license.org/2012
+
+
+.. _virtualenvwrapper: http://www.doughellmann.com/projects/virtualenvwrapper/
+.. _tmuxstart announcement: http://treyhunner.com/2012/12/tmuxstart/
