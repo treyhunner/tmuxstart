@@ -70,13 +70,15 @@ This function accepts the same arguments as ``tmux select-pane``.  Examples::
 
 set_env
 ~~~~~~~
-``set_env`` sets an environment variable for the new session.  This function accepts the same arguments as ``tmux set-environment``.  Example::
+``set_env`` sets an environment variable for the new session.  This function
+accepts the same arguments as ``tmux set-environment``.  Example::
 
     set_env EDITOR acme  # Set EDITOR environment variable to "acme"
 
 split
 ~~~~~
-``split`` splits the given window or pane based on the arguments given.  This function accepts the same arguments as ``tmux split-window``.  Example::
+``split`` splits the given window or pane based on the arguments given.  This
+function accepts the same arguments as ``tmux split-window``.  Example::
 
     split 2 -h  # Split window 2 horizontally
     split 2.1 -l 2  # Split pane 1 in window 2 vertically using 2 text lines
@@ -85,7 +87,8 @@ split
 
 swap
 ~~~~
-``swap`` swaps the given pane with another pane.  This function accepts the same arguments as ``tmux swap-pane``.  Example:
+``swap`` swaps the given pane with another pane.  This function accepts the
+same arguments as ``tmux swap-pane``.  Example:
 
     swap 2.1 -D  # Swap pane 1 in window 2 with the next pane
     swap 3.2 -U  # Swap pane 2 in window 3 with the previous pane
