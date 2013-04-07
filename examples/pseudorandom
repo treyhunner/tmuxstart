@@ -1,0 +1,10 @@
+# tmux session for working on pseudorandom.name Flask app
+
+new_session -n server
+set_env VIRTUALENV pseudorandom  # Used in custom .zshrc to set virtualenv
+send_keys 1 "workon pseudorandom" "Enter"
+send_keys 1 "python pseudorandom.py" "Enter"
+cd ~/repos/personal/pseudorandom.name
+new_window
+send_keys 2 "vim ." "Enter"
+select_window 2

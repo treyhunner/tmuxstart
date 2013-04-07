@@ -1,0 +1,3 @@
+# Make an htop window make a regular shell window
+new_session -n htop htop
+new_window
