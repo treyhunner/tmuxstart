@@ -9,6 +9,7 @@ select_pane() { tmux select-pane -t $session:"$@"; }
 set_env() { tmux set-environment -t $session "$@"; }
 split() { tmux split-window -t $session:"$@"; }
 swap() { tmux swap-pane -t $session:"$@"; }
+set_path() { tmux set-option -t $session default-path "$@"; }
 
 
 usage() {
