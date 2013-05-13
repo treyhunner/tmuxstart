@@ -88,7 +88,7 @@ function accepts the same arguments as ``tmux split-window``.  Example::
 swap
 ~~~~
 ``swap`` swaps the given pane with another pane.  This function accepts the
-same arguments as ``tmux swap-pane``.  Example:
+same arguments as ``tmux swap-pane``.  Example::
 
     swap 2.1 -D  # Swap pane 1 in window 2 with the next pane
     swap 3.2 -U  # Swap pane 2 in window 3 with the previous pane
