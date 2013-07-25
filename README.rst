@@ -75,6 +75,14 @@ accepts the same arguments as ``tmux set-environment``.  Example::
 
     set_env EDITOR acme  # Set EDITOR environment variable to "acme"
 
+set_path
+~~~~~~~~
+``set_path`` sets the default working directory for new panes in the new
+session.  This function access the same arguments as ``tmux default-path``.
+Example::
+
+    set_path ~/repos/personal/my_project
+
 split
 ~~~~~
 ``split`` splits the given window or pane based on the arguments given.  This
