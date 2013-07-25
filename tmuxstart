@@ -1,9 +1,14 @@
 #!/bin/sh
 
 # Some helper functions for simpler session files
-kill_window() { tmux kill-window -t $session:"$@"; }
-new_session() { tmux new-session -d -s $session "$@"; }
+new_session() {
+    # Set default path based on $path variable if defined
+    [ "$path" ] && cd "$path"
+    tmux new-session -d -s $session "$@"
+    [ "$path" ] && set_path "$path"
+}
 new_window() { tmux new-window -d -c $PWD -t $session "$@"; }
+kill_window() { tmux kill-window -t $session:"$@"; }
 select_pane() { tmux select-pane -t $session:"$@"; }
 select_window() { tmux select-window -t $session:"$@"; }
 send_keys() { tmux send-keys -t $session:"$@"; }
