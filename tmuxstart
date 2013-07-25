@@ -1,22 +1,20 @@
 #!/bin/sh
 
 # Some helper functions for simpler session files
+kill_window() { tmux kill-window -t $session:"$@"; }
 new_session() { tmux new-session -d -s $session "$@"; }
-new_window() { tmux new-window -d -t $session "$@"; }
-send_keys() { tmux send-keys -t $session:"$@"; }
-select_window() { tmux select-window -t $session:"$@"; }
+new_window() { tmux new-window -d -c $PWD -t $session "$@"; }
 select_pane() { tmux select-pane -t $session:"$@"; }
+select_window() { tmux select-window -t $session:"$@"; }
+send_keys() { tmux send-keys -t $session:"$@"; }
 set_env() { tmux set-environment -t $session "$@"; }
+set_path() { tmux set-option -t $session default-path "$@"; }
 split() { tmux split-window -t $session:"$@"; }
 swap() { tmux swap-pane -t $session:"$@"; }
-set_path() { tmux set-option -t $session default-path "$@"; }
 
-
-usage() {
-    echo "Usage: $0 tmux-session"
-}
 
 # Print usage information if there's not exactly 1 argument
+usage() { echo "Usage: $0 tmux-session"; }
 [ $# -ne 1 ] && usage && exit 1
 
 session=$1

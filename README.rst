@@ -26,7 +26,7 @@ Helper functions
 ----------------
 
 To make the process of writing session files easier some helper functions are
-included in the tmuxstart script.  The available helper functions are::
+included in the tmuxstart script.  The available helper functions are:
 
 new_session
 ~~~~~~~~~~~
@@ -67,6 +67,13 @@ This function accepts the same arguments as ``tmux select-pane``.  Examples::
 
     select_pane 2.1  # Select pane 1 in window 2
     select_pane 1.2  # Select pane 2 in window 1
+
+kill_window
+~~~~~~~~~~~
+``kill_window`` kills the given window number in the new session.  This
+function accepts the same arguments as ``tmux kill-window``.  Example::
+
+    kill_window 1  # Kills window 1
 
 set_env
 ~~~~~~~
