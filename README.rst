@@ -10,6 +10,13 @@ With the above binding, pressing ``<PREFIX> S`` will prompt you for a session
 name.  ``<PREFIX>`` is ``CTRL-b`` by default.
 
 
+Installation
+------------
+
+Just copy the ``tmuxstart`` file to one of the directories in your ``$PATH``.
+I suggest either ``/usr/bin``, ``/usr/local/bin``, or ``~/bin``.
+
+
 Session Files
 -------------
 
@@ -145,13 +152,6 @@ management::
     select_pane 2.1
 
 
-Installation
-------------
-
-Just copy the ``tmuxstart`` file to one of the directories in your ``$PATH``.
-I suggest either ``/usr/bin``, ``/usr/local/bin``, or ``~/bin``.
-
-
 Contributing & Help
 -------------------
 
@@ -168,5 +168,16 @@ License
 Tmuxstart is provided under an MIT license: http://th.mit-license.org/2012
 
 
+Related Projects
+----------------
+
+Inspirations and similar projects:
+
+- `tmuxinator`_
+- `teamocil`_
+
+
 .. _virtualenvwrapper: http://www.doughellmann.com/projects/virtualenvwrapper/
 .. _tmuxstart announcement: http://treyhunner.com/2012/12/tmuxstart/
+.. _tmuxinator: https://github.com/aziz/tmuxinator
+.. _teamocil: https://github.com/remiprev/teamocil
