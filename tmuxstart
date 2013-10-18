@@ -7,7 +7,7 @@ new_session() {
     tmux new-session -d -s $session "$@"
     [ "$path" ] && set_path "$path"
 }
-new_window() { tmux new-window -d -c $PWD -t $session "$@"; }
+new_window() { tmux new-window -d -t $session "$@"; }
 kill_window() { tmux kill-window -t $session:"$@"; }
 select_pane() { tmux select-pane -t $session:"$@"; }
 select_window() { tmux select-window -t $session:"$@"; }
