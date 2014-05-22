@@ -12,14 +12,14 @@ kill_window() { tmux kill-window -t $session:"$@"; }
 select_pane() { tmux select-pane -t $session:"$@"; }
 select_window() { tmux select-window -t $session:"$@"; }
 send_keys() { tmux send-keys -t $session:"$@"; }
+send_command() { tmux send-keys -t $session:"$@" 'Enter'; }
 set_env() { tmux set-environment -t $session "$@"; }
 set_path() { tmux set-option -t $session default-path "$@"; }
 split() { tmux split-window -t $session:"$@"; }
 swap() { tmux swap-pane -t $session:"$@"; }
 
-
 # Print usage information if there's not exactly 1 argument
-usage() { echo "Usage: $0 tmux-session"; }
+usage() { echo "Usage: $(basename $0) tmux-session"; }
 [ $# -ne 1 ] && usage && exit 1
 
 session=$1
