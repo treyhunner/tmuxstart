@@ -1,11 +1,44 @@
 #!/bin/sh
 
+sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
+sessionexample="
+# Make an htop window make a regular shell window\n
+new_session -n htop htop\n
+new_window\n
+"
+
+# Print usage information if there's not exactly 1 argument
+usage() {
+  # TODO: print all available options
+  echo "Usage: $(basename $0) tmux-session"
+  exit 1
+}
+
+while getopts ':hlo:' option; do
+  case "${option}" in
+    h)
+      usage ;;
+    l)
+      ls -1 $sessiondir; exit 0 ;;
+    o)
+      sessionfile="${sessiondir}/${OPTARG}"
+      if [ ! -f $sessionfile ]; then
+        echo -e $sessionexample > $sessionfile;
+      fi
+      ${EDITOR:-vi} $sessionfile
+      exit 0 ;;
+    *)
+      echo "Invalid option"
+      usage ;;
+  esac
+done
+
 # Some helper functions for simpler session files
 new_session() {
-    # Set default path based on $path variable if defined
-    [ "$path" ] && cd "$path"
-    tmux new-session -d -s $session "$@"
-    [ "$path" ] && set_path "$path"
+  # Set default path based on $path variable if defined
+  [ "$path" ] && cd "$path"
+  tmux new-session -d -s $session "$@"
+  [ "$path" ] && set_path "$path"
 }
 new_window() { tmux new-window -d -t $session "$@"; }
 kill_window() { tmux kill-window -t $session:"$@"; }
@@ -18,24 +51,20 @@ set_path() { tmux set-option -t $session default-path "$@"; }
 split() { tmux split-window -t $session:"$@"; }
 swap() { tmux swap-pane -t $session:"$@"; }
 
-# Print usage information if there's not exactly 1 argument
-usage() { echo "Usage: $(basename $0) tmux-session"; }
-[ $# -ne 1 ] && usage && exit 1
-
+# normal session management
 session=$1
-sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
 TMUX_OLD=$TMUX
 TMUX=
 if ! tmux has-session -t $session ; then
-    if [ -f "$sessiondir/$1" ] ; then
-        . "$sessiondir/$1"
-    else
-        tmux new-session -d -s $session
-    fi
+  if [ -f "$sessiondir/$1" ] ; then
+    . "$sessiondir/$1"
+  else
+    tmux new-session -d -s $session
+  fi
 fi
 if [ "$TMUX_OLD" = "" ]; then
-    tmux attach-session -t $session
+  tmux attach-session -t $session
 else
-    tmux switch-client -t $session
+  tmux switch-client -t $session
 fi
 TMUX=$TMUX_OLD
