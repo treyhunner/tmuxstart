@@ -1,6 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
+
+# TODO: figure out where to put example session
 sessionexample="
 # Make an htop window make a regular shell window\n
 new_session -n htop htop\n
@@ -14,7 +16,7 @@ usage() {
   exit 1
 }
 
-while getopts ':hlo:' option; do
+while getopts ':hlo:d:' option; do
   case "${option}" in
     h)
       usage ;;
@@ -23,13 +25,27 @@ while getopts ':hlo:' option; do
     o)
       sessionfile="${sessiondir}/${OPTARG}"
       if [ ! -f $sessionfile ]; then
-        echo -e $sessionexample > $sessionfile;
+        #TODO: check if vim, else create file
+        echo -e $sessionexample | $EDITOR - +"file ${sessionfile}"
+        # echo -e $sessionexample > $sessionfile;
+      else
+        ${EDITOR:-vi} $sessionfile
       fi
-      ${EDITOR:-vi} $sessionfile
-      exit 0 ;;
+      exit 0
+      ;;
+    d)
+      sessionfile="${sessiondir}/${OPTARG}"
+      if [[ -f $sessionfile ]]; then
+        echo "Are you sure you want to remove ${OPTARG}? [y/N]"
+        read confirm
+        [[ $confirm =~ 'y' ]] && rm -v $sessionfile
+      fi
+      exit
+      ;;
     *)
       echo "Invalid option"
-      usage ;;
+      usage
+      ;;
   esac
 done
 
