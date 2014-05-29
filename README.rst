@@ -51,6 +51,11 @@ the same arguments as ``tmux new-window``.  Examples::
 
     new_window  # Just create a new window
     new_window -n edit emacs  # Create a new window named "edit" running emacs
+    
+rename
+~~~~~~
+``rename`` renames an existing window.  This function accepts the same arguments
+as ``tmux rename-window``.
 
 send_keys
 ~~~~~~~~~
@@ -59,6 +64,14 @@ function accepts the same arguments as ``tmux send-keys``.  Examples::
 
     send_keys 1 "echo hello" "Enter"  # Run "echo hello" in window 1
     send_keys 2 C-c  # Send Ctrl-C key combination to window 2
+    
+send_line
+~~~~~~~~~
+``send_line`` sends a line of input to a given window number in the session.
+This function accepts the same arguments as ``send_keys`` but adds "Enter" as
+an additional argument to each call. Examples::
+
+    send_line 1 "echo hello"  # Same as example above, but no need for "Enter"
 
 select_window
 ~~~~~~~~~~~~~
@@ -74,6 +87,13 @@ This function accepts the same arguments as ``tmux select-pane``.  Examples::
 
     select_pane 2.1  # Select pane 1 in window 2
     select_pane 1.2  # Select pane 2 in window 1
+
+select_layout
+~~~~~~~~~~~~~
+``select_layout`` applies a given layout to the selected window.  This
+function accepts the same arguments as ``tmux select-layout``.  Example::
+
+    select_layout 2 main-vertical # Arrange window 2 in the main-vertical layout
 
 kill_window
 ~~~~~~~~~~~
