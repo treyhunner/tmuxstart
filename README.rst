@@ -57,6 +57,11 @@ rename
 ``rename`` renames an existing window.  This function accepts the same arguments
 as ``tmux rename-window``.
 
+rename
+~~~~~~
+``rename`` renames an existing window.  This function accepts the same arguments
+as ``tmux rename-window``.
+
 send_keys
 ~~~~~~~~~
 ``send_keys`` sends keys to a given window number in the new session.  This
@@ -65,6 +70,14 @@ function accepts the same arguments as ``tmux send-keys``.  Examples::
     send_keys 1 "echo hello" "Enter"  # Run "echo hello" in window 1
     send_keys 2 C-c  # Send Ctrl-C key combination to window 2
     
+send_line
+~~~~~~~~~
+``send_line`` sends a line of input to a given window number in the session.
+This function accepts the same arguments as ``send_keys`` but adds "Enter" as
+an additional argument to each call. Examples::
+
+    send_line 1 "echo hello"  # Same as example above, but no need for "Enter"
+
 send_line
 ~~~~~~~~~
 ``send_line`` sends a line of input to a given window number in the session.
@@ -171,6 +184,33 @@ management::
     # Select pane 1 in window 2
     select_pane 2.1
 
+CLI usage
+---------------------
+
+Arguments
+    ``$ tmuxstart session_name``
+
+Will search for a session file called "session_name" in ``$TMUXSTART_DIR`` if
+set, otherwise in ``~/.tmuxstart`` and load it.  If no such file is found, it
+will start a new ``tmux`` session named "session_name".
+
+    ``$ tmuxstart -h``
+
+Shows help dialog.
+
+    ``$ tmuxstart -l``
+
+List all available session files.
+
+    ``$ tmuxstart -o session_name``
+
+Open session file with given name for editing. If no session file is found,
+creates one with example content.
+
+
+    ``$ tmuxstart -d session_name``
+
+Prompts for deletion of session file.
 
 Contributing & Help
 -------------------
