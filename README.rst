@@ -51,7 +51,7 @@ the same arguments as ``tmux new-window``.  Examples::
 
     new_window  # Just create a new window
     new_window -n edit emacs  # Create a new window named "edit" running emacs
-    
+
 rename
 ~~~~~~
 ``rename`` renames an existing window.  This function accepts the same arguments
@@ -69,7 +69,7 @@ function accepts the same arguments as ``tmux send-keys``.  Examples::
 
     send_keys 1 "echo hello" "Enter"  # Run "echo hello" in window 1
     send_keys 2 C-c  # Send Ctrl-C key combination to window 2
-    
+
 send_line
 ~~~~~~~~~
 ``send_line`` sends a line of input to a given window number in the session.
@@ -211,6 +211,22 @@ creates one with example content.
     ``$ tmuxstart -d session_name``
 
 Prompts for deletion of session file.
+
+CLI tab completion
+-------------------
+
+Currently there's only zsh suppor for tab completions.
+To enable it add the ``completions`` folder to your ``fpath`` and make sure zsh's tab completion system is enabled.
+
+    ``$ autoload -U compinit``
+
+    ``$ compinit``
+
+If you're doing this by hand you'll probably want to execute this too:
+
+    ``$ zstyle ':completion:*:descriptions' format '%U%B%d%b%u'``
+
+    ``$ zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'``
 
 Contributing & Help
 -------------------
