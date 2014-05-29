@@ -64,11 +64,13 @@ new_session() {
     [ "$path" ] && set_path "$path"
 }
 new_window() { tmux new-window -d -t $session "$@"; }
+rename() { tmux rename-window -t $session:"$@"; }
 kill_window() { tmux kill-window -t $session:"$@"; }
 select_pane() { tmux select-pane -t $session:"$@"; }
 select_window() { tmux select-window -t $session:"$@"; }
+select_layout() { tmux select-layout -t $session:"$@"; }
 send_keys() { tmux send-keys -t $session:"$@"; }
-send_command() { tmux send-keys -t $session:"$@" 'Enter'; }
+send_line() { send_keys "$@" "Enter"; }
 set_env() { tmux set-environment -t $session "$@"; }
 set_path() { tmux set-option -t $session default-path "$@"; }
 split() { tmux split-window -t $session:"$@"; }
