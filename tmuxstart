@@ -16,12 +16,19 @@ usage() {
     exit 1
 }
 
-while getopts ':hlo:d:' option; do
+# no arguments received
+[ $# -eq 0 ] && usage
+
+while getopts ':hlc:o:d:' option; do
     case "${option}" in
         h)
             usage ;;
         l)
             ls -1 $sessiondir; exit 0 ;;
+        c)
+            [ -f "./$OPTARG" -a ! -f "${sessiondir}/${OPTARG}" ] && ln -s "$PWD/$OPTARG" $sessiondir && exit 0;
+            exit 1
+            ;;
         o)
             sessionfile="${sessiondir}/${OPTARG}"
             if [ ! -f $sessionfile ]; then
@@ -76,18 +83,21 @@ set_path() { tmux set-option -t $session default-path "$@"; }
 split() { tmux split-window -t $session:"$@"; }
 swap() { tmux swap-pane -t $session:"$@"; }
 
-# no arguments received
-[ $# -eq 0 ] && usage
-
 # normal session management
 session=$1
 TMUX_OLD=$TMUX
 TMUX=
 if ! tmux has-session -t $session ; then
-    if [ -f "$sessiondir/$1" ] ; then
-        . "$sessiondir/$1"
+    if [ -f "./$session" ]; then
+            . "./$session"
     else
-        tmux new-session -d -s $session
+        if [ -f "$sessiondir/$session" ] ; then
+            cd $sessiondir
+            [ -h "./$session" ] && cd $(dirname $(readlink "$session"))
+            . "./$session"
+        else
+            tmux new-session -d -s $session
+        fi
     fi
 fi
 if [ "$TMUX_OLD" = "" ]; then

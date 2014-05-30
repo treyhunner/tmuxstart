@@ -202,6 +202,10 @@ Shows help dialog.
 
 List all available session files.
 
+    ``$ tmuxstart -c session_name``
+
+Copy local session file and make it available globally.
+
     ``$ tmuxstart -o session_name``
 
 Open session file with given name for editing. If no session file is found,
