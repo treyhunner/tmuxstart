@@ -1,5 +1,36 @@
 #!/bin/sh
 
+sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
+
+# Print usage information if there's not enough arguments
+usage() {
+    local ts_name
+    ts_name=$(basename $0)
+    echo "${ts_name} options:"
+    echo "=================="
+    echo "${ts_name} tmux-session   -- Start/Attach session";
+    echo "${ts_name} -h             -- Print help menu"
+    echo "${ts_name} -l             -- List all available session files"
+}
+
+[ $# -lt 1 ] && usage && exit 1
+
+# local functions
+
+# arguments parsing loop
+while getopts ':hl' option; do
+    case "${option}" in
+        h)
+            usage ;;
+        l)
+            \ls  $sessiondir ; exit 0 ;;
+        *)
+            echo "Invalid option"
+            usage
+            ;;
+    esac
+done
+
 # Some helper functions for simpler session files
 new_session() {
     # Set default path based on $path variable if defined
@@ -20,13 +51,7 @@ set_path() { tmux set-option -t $session default-path "$@"; }
 split() { tmux split-window -t $session:"$@"; }
 swap() { tmux swap-pane -t $session:"$@"; }
 
-
-# Print usage information if there's not exactly 1 argument
-usage() { echo "Usage: $0 tmux-session"; }
-[ $# -ne 1 ] && usage && exit 1
-
 session=$1
-sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
 TMUX_OLD=$TMUX
 TMUX=
 if ! tmux has-session -t $session ; then

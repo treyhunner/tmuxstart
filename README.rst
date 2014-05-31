@@ -51,7 +51,7 @@ the same arguments as ``tmux new-window``.  Examples::
 
     new_window  # Just create a new window
     new_window -n edit emacs  # Create a new window named "edit" running emacs
-    
+
 rename
 ~~~~~~
 ``rename`` renames an existing window.  This function accepts the same arguments
@@ -64,7 +64,7 @@ function accepts the same arguments as ``tmux send-keys``.  Examples::
 
     send_keys 1 "echo hello" "Enter"  # Run "echo hello" in window 1
     send_keys 2 C-c  # Send Ctrl-C key combination to window 2
-    
+
 send_line
 ~~~~~~~~~
 ``send_line`` sends a line of input to a given window number in the session.
@@ -171,6 +171,24 @@ management::
     # Select pane 1 in window 2
     select_pane 2.1
 
+
+CLI usage
+---------------------
+
+Arguments
+    ``$ tmuxstart session_name``
+
+Will search for a session file called "session_name" in ``$TMUXSTART_DIR`` if
+set, otherwise in ``~/.tmuxstart`` and load it.  If no such file is found, it
+will start a new ``tmux`` session named "session_name".
+
+    ``$ tmuxstart -h``
+
+Show help dialog.
+
+    ``$ tmuxstart -l``
+
+List all available session files.
 
 Contributing & Help
 -------------------
