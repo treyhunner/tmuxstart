@@ -6,11 +6,11 @@ sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
 usage() {
     local ts_name
     ts_name=$(basename $0)
-    echo "${ts_name} options:"
-    echo "=================="
-    echo "${ts_name} tmux-session   -- Start/Attach session";
-    echo "${ts_name} -h             -- Print help menu"
-    echo "${ts_name} -l             -- List all available session files"
+    echo "Usage: ${ts_name} [OPTIONS] SESSION\n"
+    echo "Launch reusable configurations for named tmux sessions.\n"
+    echo "Options:\n"
+    echo "-h Print help menu"
+    echo "-l List all available session files"
 }
 
 [ $# -lt 1 ] && usage && exit 1
@@ -26,7 +26,7 @@ while getopts ':hl' option; do
             \ls  $sessiondir ; exit 0 ;;
         *)
             echo "Invalid option"
-            usage
+            usage ; exit 1
             ;;
     esac
 done
