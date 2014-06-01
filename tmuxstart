@@ -26,14 +26,19 @@ usage() { echo "Usage: $0 tmux-session"; }
 [ $# -ne 1 ] && usage && exit 1
 
 session=$1
-sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
 TMUX_OLD=$TMUX
 TMUX=
 if ! tmux has-session -t $session ; then
-    if [ -f "$sessiondir/$1" ] ; then
-        . "$sessiondir/$1"
+    if [ -f "./$session" ]; then
+        . "./$session"
     else
-        tmux new-session -d -s $session
+        if [ -f "$sessiondir/$session" ] ; then
+            cd $sessiondir
+            [ -h "./$session" ] && cd $(dirname $(readlink "$session"))
+            . "./$session"
+        else
+            tmux new-session -d -s $session
+        fi
     fi
 fi
 if [ "$TMUX_OLD" = "" ]; then
