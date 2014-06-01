@@ -2,8 +2,10 @@
 
 sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
 
-# Print usage information if there's not enough arguments
-usage() {
+# local functions
+
+# Print _usage information if there's not enough arguments
+_usage() {
     local ts_name
     ts_name=$(basename $0)
     echo "Usage: ${ts_name} [OPTIONS] SESSION\n"
@@ -13,21 +15,52 @@ usage() {
     echo "-l List all available session files"
 }
 
-[ $# -lt 1 ] && usage && exit 1
+[ $# -lt 1 ] && _usage && exit 1
 
-# local functions
+_open_session_file() {
+    local session_file session_example
+    # TODO: add option to select example file
+    session_example="
+    # Make an htop window make a regular shell window\n
+    new_session -n htop htop\n
+    new_window\n
+    "
+    session_file="${sessiondir}/${OPTARG}"
+
+    if [ ! -f $session_file ]; then
+        # EDITOR not explicitly set or uses vim
+        if [ -z "$EDITOR" -o "$EDITOR" = 'vi' -o "$EDITOR" = 'vim' ]; then
+            # create a buffer with dummy content in $TMUXSTART_DIR
+            echo "${session_example}" | ${EDITOR:-vi} - +"file ${session_file}"
+        else
+            echo "${session_example}" > $session_file;
+            $EDITOR $session_file
+        fi
+    else
+        ${EDITOR:-vi} $session_file
+    fi
+}
+
+_list_session_files(){
+    \ls  $sessiondir ; exit 0
+}
 
 # arguments parsing loop
-while getopts ':hl' option; do
+while getopts ':hlo:' option; do
     case "${option}" in
         h)
-            usage ; exit 0 ;;
+            _usage ; exit 0 ;;
         l)
-            \ls  $sessiondir ; exit 0 ;;
+            _list_session_files ;;
+        o)
+            _open_session_file
+            exit 0 ;;
+        :)
+            echo "Option -$OPTARG requires an argument."
+            _usage ; exit 1 ;;
         *)
             echo "Invalid option"
-            usage ; exit 1
-            ;;
+            _usage ; exit 1 ;;
     esac
 done
 

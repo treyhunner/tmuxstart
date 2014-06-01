@@ -190,6 +190,11 @@ Show help dialog.
 
 List all available session files.
 
+    ``$ tmuxstart -o session_name``
+
+Open session file with given name for editing. If no session file is found,
+creates one with example content.
+
 Contributing & Help
 -------------------
 
