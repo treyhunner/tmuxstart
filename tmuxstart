@@ -21,7 +21,7 @@ usage() {
 while getopts ':hl' option; do
     case "${option}" in
         h)
-            usage ;;
+            usage ; exit 0 ;;
         l)
             \ls  $sessiondir ; exit 0 ;;
         *)
