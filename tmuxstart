@@ -54,8 +54,7 @@ while getopts ':hlo:' option; do
         l)
             _list_session_files ;;
         o)
-            _open_session_file
-            exit 0 ;;
+            _open_session_file ; exit 0 ;;
         :)
             echo "Option -$OPTARG requires an argument."
             _usage ; exit 1 ;;
