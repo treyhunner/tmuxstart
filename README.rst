@@ -190,6 +190,10 @@ Show help dialog.
 
 List all available session files.
 
+    ``$ tmuxstart -v``
+
+Print tmuxstart version number.
+
 Contributing & Help
 -------------------
 

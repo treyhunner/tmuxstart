@@ -1,29 +1,36 @@
 #!/bin/sh
 
 sessiondir=${TMUXSTART_DIR:-$HOME/.tmuxstart}
+ts_name=$(basename $0)
 
 # Print usage information if there's not enough arguments
 usage() {
-    local ts_name
-    ts_name=$(basename $0)
     echo "Usage: ${ts_name} [OPTIONS] SESSION\n"
     echo "Launch reusable configurations for named tmux sessions.\n"
     echo "Options:\n"
     echo "-h Print help menu"
     echo "-l List all available session files"
+    echo "-v Print ${ts_name} version number"
 }
 
 [ $# -lt 1 ] && usage && exit 1
 
 # local functions
+_print_version() {
+    local version
+    version='[ version number here ]'
+    echo "${ts_name} ${version}"
+}
 
 # arguments parsing loop
-while getopts ':hl' option; do
+while getopts ':hlv' option; do
     case "${option}" in
         h)
             usage ; exit 0 ;;
         l)
             \ls  $sessiondir ; exit 0 ;;
+        v)
+            _print_version ; exit 0 ;;
         *)
             echo "Invalid option"
             usage ; exit 1
