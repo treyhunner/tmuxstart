@@ -1,4 +1,5 @@
 - Brian Galey <bkgaley AT gmail DOT com>
 - Brian Hicks <brian@brianthicks.com>
 - Hong Xu <hong AT topbug DOT net>
+- Farfanoide <ivan6258@gmail.com>
 - Trey Hunner <trey@treyhunner.com>
