@@ -18,7 +18,7 @@ usage() {
 # local functions
 _print_version() {
     local version
-    version='[ version number here ]'
+    version='0.2.0-dev'
     echo "${ts_name} ${version}"
 }
 
