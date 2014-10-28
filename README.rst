@@ -194,6 +194,38 @@ List all available session files.
 
 Print tmuxstart version number.
 
+CLI tab completion
+-------------------
+
+Currently there's only zsh and bash basic support for tab completions.
+
+To enable tab completion for tmuxstart in ZSH, add the tmuxstart completion file
+to a directory in your ``fpath``:
+
+    ``$ mkdir -p ~/.zsh/completions``
+    ``cp completions/_tmuxstart.zsh ~/.zsh/completions/_tmuxstart``
+
+Add the following to your .zshrc file to ensure tab completion is enabled and
+the ``~/.zsh/completions`` directory is added to your ``fpath``
+
+    ``$ autoload -U compinit``
+
+    ``$ compinit``
+
+    ``fpath=(~/.zsh/completion $fpath)``
+
+If you're doing this by hand you'll probably want to execute this too:
+
+    ``$ zstyle ':completion:*:descriptions' format '%U%B%d%b%u'``
+
+    ``$ zstyle ':completion:*:warnings' format '%BSorry, no matches for: %d%b'``
+
+
+In bash it should work by sourcing the file directly
+For example you could have a line lik this in yout bashrc:
+
+    ``source "path_to_tmuxstart_completions/tmuxstart.bash"``
+
 Contributing & Help
 -------------------
 
